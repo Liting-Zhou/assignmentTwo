@@ -87,7 +87,7 @@ export default function AddActivity() {
       </View>
       <View style={styles.formItemContainer}>
         <Text style={styles.label}>Date*</Text>
-        <Pressable onPress={() => setShowDatePicker(true)}>
+        <Pressable onPress={() => setShowDatePicker(!showDatePicker)}>
           <Input
             value={date.toDateString()}
             editable={false}
@@ -115,6 +115,7 @@ export default function AddActivity() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 20,
   },
 
   formItemContainer: {

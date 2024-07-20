@@ -6,10 +6,11 @@ export default function Input({
   value,
   editable,
   pointerEvents,
+  style,
 }) {
   return (
     <TextInput
-      style={styles.input}
+      style={[styles.input, style]}
       value={value}
       onChangeText={onChangeText}
       editable={editable}
