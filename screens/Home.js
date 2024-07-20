@@ -22,12 +22,12 @@ export default function Home() {
             <MaterialIcons name="directions-run" size={size} color={color} />
           ),
           headerRight: () => (
-            <PressableButton onPress={() => navigation.navigate("AddActivity")}>
+            <Pressable onPress={() => navigation.navigate("AddActivity")}>
               <View style={{ flexDirection: "row", marginRight: 10 }}>
                 <MaterialIcons name="add" size={24} color="black" />
                 <MaterialIcons name="directions-run" size={24} color="black" />
               </View>
-            </PressableButton>
+            </Pressable>
           ),
         }}
       />
@@ -39,12 +39,12 @@ export default function Home() {
             <MaterialIcons name="fastfood" size={size} color={color} />
           ),
           headerRight: () => (
-            <PressableButton onPress={() => navigation.navigate("AddDiet")}>
+            <Pressable onPress={() => navigation.navigate("AddDiet")}>
               <View style={{ flexDirection: "row", marginRight: 10 }}>
                 <MaterialIcons name="add" size={24} color="black" />
                 <MaterialIcons name="fastfood" size={24} color="black" />
               </View>
-            </PressableButton>
+            </Pressable>
           ),
         }}
       />
