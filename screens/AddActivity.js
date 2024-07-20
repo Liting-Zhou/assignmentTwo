@@ -1,9 +1,17 @@
-import { StyleSheet, Text, View, TextInput, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Alert,
+  Pressable,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "../components/PressableButton";
+import Input from "../components/Input";
 
 export default function AddActivity() {
   const [activityType, setActivityType] = useState(null);
@@ -53,51 +61,49 @@ export default function AddActivity() {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
-        <Text style={styles.label}>Activity*</Text>
-
-        <DropDownPicker
-          open={openDropDown}
-          value={activityType}
-          items={[
-            { label: "Walking", value: "walking" },
-            { label: "Running", value: "running" },
-            { label: "Swimming", value: "swimming" },
-            { label: "Weights", value: "weights" },
-            { label: "Yoga", value: "yoga" },
-            { label: "Cycling", value: "cycling" },
-            { label: "Hiking", value: "hiking" },
-          ]}
-          setOpen={setOpenDropDown}
-          setValue={setActivityType}
-          setItems={() => {}}
-          // style={styles.dropdown}
-          multiple={false}
-        />
-
-        <Text style={styles.label}>Duration (min)*</Text>
-        <TextInput
-          // style={styles.input}
-          // keyboardType="numeric"
-          value={duration}
-          onChangeText={setDuration}
-        />
-        <Text style={styles.label}>Date*</Text>
-        <PressableButton onPress={() => setShowDatePicker(true)}>
-          <TextInput
-            //   style={styles.input}
-            value={date.toDateString()}
-            editable={false}
-            pointerEvents="none"
+        <View style={styles.formItemContainer}>
+          <Text style={styles.label}>Activity*</Text>
+          <DropDownPicker
+            open={openDropDown}
+            value={activityType}
+            items={[
+              { label: "Walking", value: "walking" },
+              { label: "Running", value: "running" },
+              { label: "Swimming", value: "swimming" },
+              { label: "Weights", value: "weights" },
+              { label: "Yoga", value: "yoga" },
+              { label: "Cycling", value: "cycling" },
+              { label: "Hiking", value: "hiking" },
+            ]}
+            setOpen={setOpenDropDown}
+            setValue={setActivityType}
+            setItems={() => {}}
+            // style={styles.dropdown}
+            multiple={false}
           />
-        </PressableButton>
-        {showDatePicker && (
-          <DateTimePicker
-            value={date}
-            mode="date"
-            display="inline"
-            onChange={handleDateChange}
-          />
-        )}
+        </View>
+        <View style={styles.formItemContainer}>
+          <Text style={styles.label}>Duration (min)*</Text>
+          <Input value={duration} onChangeText={setDuration} />
+        </View>
+        <View style={styles.formItemContainer}>
+          <Text style={styles.label}>Date*</Text>
+          <Pressable onPress={() => setShowDatePicker(true)}>
+            <Input
+              value={date.toDateString()}
+              editable={false}
+              pointerEvents="none"
+            />
+          </Pressable>
+          {showDatePicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display="inline"
+              onChange={handleDateChange}
+            />
+          )}
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <PressableButton title="Cancel" onPress={handleCancel} />
@@ -108,8 +114,20 @@ export default function AddActivity() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  form: { flex: 2 },
+  container: {
+    flex: 1,
+  },
+  form: {
+    flex: 2,
+    padding: 10,
+  },
+  formItemContainer: {
+    height: "20%",
+    margin: 10,
+  },
+  label: {
+    padding: 5,
+  },
   buttonContainer: {
     flex: 1,
     flexDirection: "row",
