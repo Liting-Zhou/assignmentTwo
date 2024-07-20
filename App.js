@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./screens/Home";
+import AddActivity from "./screens/AddActivity";
+import AddDiet from "./screens/AddDiet";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,7 +15,19 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="AddActivity"
+          component={AddActivity}
+          options={{ headerBackTitleVisible: false, title: "Add An Activity" }}
+        />
+        <Stack.Screen
+          name="AddDiet"
+          component={AddDiet}
+          options={{ headerBackTitleVisible: false, title: "Add A Diet Entry" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
