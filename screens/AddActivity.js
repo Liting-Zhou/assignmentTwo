@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TextInput, Alert } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import PressableButton from "../components/PressableButton";
 
 export default function AddActivity() {
@@ -11,6 +12,7 @@ export default function AddActivity() {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const specialActivities = ["running", "weights"];
+  const navigation = useNavigation();
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -29,14 +31,18 @@ export default function AddActivity() {
     }
     return true;
   };
+
   const isSpecialActivity = () => {
     return specialActivities.includes(activityType) && parseInt(duration) > 60;
   };
+
   const handleSave = () => {
     if (!validateForm()) {
       return;
     }
     const special = isSpecialActivity();
+    // todo: save the activity
+    navigation.goBack();
     console.log("Save", special);
   };
 
