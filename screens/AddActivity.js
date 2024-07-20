@@ -47,7 +47,7 @@ export default function AddActivity() {
   };
 
   const handleCancel = () => {
-    console.log("Cancel");
+    navigation.goBack();
   };
 
   return (
