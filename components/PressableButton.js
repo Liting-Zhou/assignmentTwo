@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
-    width: "20%",
+    width: "30%",
   },
   buttonText: {
     color: colors.buttonText,
