@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import { FontAwesome6 } from "@expo/vector-icons";
@@ -19,6 +19,14 @@ export default function Home() {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="directions-run" size={size} color={color} />
           ),
+          headerRight: () => (
+            <Pressable onPress={() => alert("Button with two icons pressed!")}>
+              <View style={{ flexDirection: "row", marginRight: 10 }}>
+                <MaterialIcons name="add" size={24} color="black" />
+                <MaterialIcons name="directions-run" size={24} color="black" />
+              </View>
+            </Pressable>
+          ),
         }}
       />
       <Tab.Screen
@@ -27,6 +35,14 @@ export default function Home() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="fastfood" size={size} color={color} />
+          ),
+          headerRight: () => (
+            <Pressable onPress={() => alert("Button with two icons pressed!")}>
+              <View style={{ flexDirection: "row", marginRight: 10 }}>
+                <MaterialIcons name="add" size={24} color="black" />
+                <MaterialIcons name="fastfood" size={24} color="black" />
+              </View>
+            </Pressable>
           ),
         }}
       />
