@@ -1,36 +1,25 @@
 import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import Item from "./Item";
 
 export default function ItemsList({ collection }) {
-  const navigation = useNavigation();
-
   const activitiesData = [
-    { id: 1, name: "Running" },
-    { id: 2, name: "Swimming" },
+    { id: 1, name: "Running", quantity: 30, date: "2024-09-01" },
+    { id: 2, name: "Swimming", quantity: 45, date: "2024-09-02" },
   ];
 
   const dietData = [
-    { id: 1, name: "Apple" },
-    { id: 2, name: "Banana" },
+    { id: 1, name: "Apple", quantity: 95, date: "2024-09-01" },
+    { id: 2, name: "Banana", quantity: 105, date: "2024-09-02" },
   ];
   const data = collection === "Activities" ? activitiesData : dietData;
-
-  const handleItemPress = (item) => {
-    const editScreen = collection === "Activities" ? "AddActivity" : "AddDiet";
-    navigation.navigate(editScreen, { item });
-  };
 
   return (
     <View style={styles.container}>
       <FlatList
         data={data}
         renderItem={({ item }) => (
-          <Pressable onPress={() => handleItemPress(item)}>
-            <View style={styles.item}>
-              <Text>{item.name}</Text>
-            </View>
-          </Pressable>
+          <Item itemData={item} collection={collection} />
         )}
       />
     </View>
