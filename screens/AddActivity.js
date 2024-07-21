@@ -3,6 +3,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState, useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialIcons } from "@expo/vector-icons";
 import PressableButton from "../components/PressableButton";
 import Input from "../components/Input";
 
@@ -23,9 +24,23 @@ export default function AddActivity({ route }) {
 
   // if route.params exists, set the title to "Edit"
   useLayoutEffect(() => {
-    const title = route.params ? "Edit" : "Add An Activity";
-    navigation.setOptions({ title });
+    const headerTitle = route.params ? "Edit" : "Add An Activity";
+    navigation.setOptions({
+      title: headerTitle,
+      headerRight: () =>
+        route.params ? (
+          <Pressable onPress={handleDelete}>
+            <View style={{ marginRight: 10 }}>
+              <MaterialIcons name="delete-forever" size={24} color="black" />
+            </View>
+          </Pressable>
+        ) : null,
+    });
   }, []);
+
+  const handleDelete = () => {
+    navigation.goBack();
+  };
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
