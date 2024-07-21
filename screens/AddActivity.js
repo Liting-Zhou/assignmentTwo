@@ -12,7 +12,7 @@ export default function AddActivity({ route }) {
   const itemData = route.params
     ? route.params.itemData
     : { date: new Date(), id: 0, name: "", quantity: "" };
-  const parsedDate = new Date(itemData.date);
+  const parsedDate = new Date(itemData.date); //todo: fix this
   const [activityType, setActivityType] = useState(itemData.name);
   const [openDropDown, setOpenDropDown] = useState(false);
   const [duration, setDuration] = useState(itemData.quantity);

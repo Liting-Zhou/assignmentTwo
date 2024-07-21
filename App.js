@@ -27,7 +27,7 @@ export default function App() {
         <Stack.Screen
           name="AddDiet"
           component={AddDiet}
-          options={{ headerBackTitleVisible: false, title: "Add A Diet Entry" }}
+          options={{ headerBackTitleVisible: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

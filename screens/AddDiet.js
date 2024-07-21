@@ -1,17 +1,28 @@
 import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import Input from "../components/Input";
 import PressableButton from "../components/PressableButton";
 
-export default function AddDiet() {
-  const [description, setDescription] = useState("");
-  const [calories, setCalories] = useState("");
+export default function AddDiet({ route }) {
+  // if an item is clicked, the route will have the item data
+  // otherwise, use default values
+  const itemData = route.params
+    ? route.params.itemData
+    : { date: new Date(), id: 0, name: "", quantity: "" };
+  const parsedDate = new Date(itemData.date); //todo: fix this
+  const [description, setDescription] = useState(itemData.name);
+  const [calories, setCalories] = useState(itemData.quantity);
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
-  // console.log("AddDiet date:", date);
+  const [date, setDate] = useState(parsedDate);
   const navigation = useNavigation();
+
+  // if route.params exists, set the title to "Edit"
+  useLayoutEffect(() => {
+    const title = route.params ? "Edit" : "Add A Diet Entry";
+    navigation.setOptions({ title });
+  }, []);
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;

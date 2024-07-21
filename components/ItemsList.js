@@ -9,8 +9,8 @@ export default function ItemsList({ collection }) {
   ];
 
   const dietData = [
-    { id: 1, name: "apple", quantity: 95, date: new Date("2023-01-05") },
-    { id: 2, name: "banana", quantity: 105, date: new Date("2023-02-05") },
+    { id: 1, name: "apple", quantity: "95", date: new Date("2023-01-05") },
+    { id: 2, name: "banana", quantity: "105", date: new Date("2023-02-05") },
   ];
   const data = collection === "Activities" ? activitiesData : dietData;
 
