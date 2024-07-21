@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Alert,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState, useLayoutEffect } from "react";
@@ -18,10 +11,9 @@ export default function AddActivity({ route }) {
   // otherwise, use default values
   const itemData = route.params
     ? route.params.itemData
-    : { date: new Date(), id: 0, name: null, quantity: "" };
+    : { date: new Date(), id: 0, name: "", quantity: "" };
   const parsedDate = new Date(itemData.date);
   const [activityType, setActivityType] = useState(itemData.name);
-
   const [openDropDown, setOpenDropDown] = useState(false);
   const [duration, setDuration] = useState(itemData.quantity);
   const [date, setDate] = useState(parsedDate);
@@ -29,15 +21,11 @@ export default function AddActivity({ route }) {
   const specialActivities = ["running", "weights"];
   const navigation = useNavigation();
 
-  console.log("AddActivity itemData:", itemData);
-  console.log("AddActivity activityType:", activityType);
-  console.log("AddActivity duration:", duration);
-  console.log("AddActivity date:", date);
-
+  // if route.params exists, set the title to "Edit"
   useLayoutEffect(() => {
     const title = route.params ? "Edit" : "Add An Activity";
     navigation.setOptions({ title });
-  }, [navigation, route.params]);
+  }, []);
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -77,7 +65,7 @@ export default function AddActivity({ route }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.formItemContainer}>
+      <View style={[styles.formItemContainer, { zIndex: 1000 }]}>
         <Text style={styles.label}>Activity*</Text>
         <DropDownPicker
           open={openDropDown}

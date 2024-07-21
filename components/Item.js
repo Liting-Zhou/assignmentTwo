@@ -44,14 +44,13 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 2,
-
     padding: 5,
   },
   date: {
-    flex: 2,
-
+    flex: 3,
     padding: 5,
     backgroundColor: colors.itemBackground,
+    marginRight: 5,
   },
   quantity: {
     flex: 1,
