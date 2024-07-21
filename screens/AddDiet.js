@@ -10,6 +10,7 @@ export default function AddDiet() {
   const [calories, setCalories] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
+  // console.log("AddDiet date:", date);
   const navigation = useNavigation();
 
   const handleDateChange = (event, selectedDate) => {

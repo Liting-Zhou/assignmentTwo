@@ -22,7 +22,7 @@ export default function App() {
         <Stack.Screen
           name="AddActivity"
           component={AddActivity}
-          options={{ headerBackTitleVisible: false, title: "Add An Activity" }}
+          options={{ headerBackTitleVisible: false }}
         />
         <Stack.Screen
           name="AddDiet"

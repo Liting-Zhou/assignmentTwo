@@ -8,7 +8,12 @@ export default function Item({ itemData, collection }) {
 
   const handleItemPress = (itemData) => {
     const editScreen = collection === "Activities" ? "AddActivity" : "AddDiet";
-    navigation.navigate(editScreen, { itemData });
+    navigation.navigate(editScreen, {
+      itemData: {
+        ...itemData,
+        date: itemData.date.toISOString(),
+      },
+    });
   };
 
   return (
@@ -17,7 +22,7 @@ export default function Item({ itemData, collection }) {
       style={styles.container}
     >
       <Text style={styles.name}>{itemData.name}</Text>
-      <Text style={styles.date}>{itemData.date}</Text>
+      <Text style={styles.date}>{itemData.date.toDateString()}</Text>
       <Text style={styles.quantity}>
         {itemData.quantity}
         {collection === "Activities" ? " min" : ""}
@@ -28,20 +33,23 @@ export default function Item({ itemData, collection }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: "row",
     padding: 10,
     backgroundColor: colors.itemContainer,
-    width: "80%",
+    width: "90%",
     alignSelf: "center",
     marginTop: 10,
     borderRadius: 5,
   },
   name: {
     flex: 2,
+
     padding: 5,
   },
   date: {
     flex: 2,
+
     padding: 5,
     backgroundColor: colors.itemBackground,
   },

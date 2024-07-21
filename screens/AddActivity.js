@@ -8,19 +8,36 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "../components/PressableButton";
 import Input from "../components/Input";
 
-export default function AddActivity() {
-  const [activityType, setActivityType] = useState(null);
+export default function AddActivity({ route }) {
+  // if an item is clicked, the route will have the item data
+  // otherwise, use default values
+  const itemData = route.params
+    ? route.params.itemData
+    : { date: new Date(), id: 0, name: null, quantity: "" };
+  const parsedDate = new Date(itemData.date);
+  const [activityType, setActivityType] = useState(itemData.name);
+
   const [openDropDown, setOpenDropDown] = useState(false);
-  const [duration, setDuration] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [duration, setDuration] = useState(itemData.quantity);
+  const [date, setDate] = useState(parsedDate);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const specialActivities = ["running", "weights"];
   const navigation = useNavigation();
+
+  console.log("AddActivity itemData:", itemData);
+  console.log("AddActivity activityType:", activityType);
+  console.log("AddActivity duration:", duration);
+  console.log("AddActivity date:", date);
+
+  useLayoutEffect(() => {
+    const title = route.params ? "Edit" : "Add An Activity";
+    navigation.setOptions({ title });
+  }, [navigation, route.params]);
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -77,7 +94,6 @@ export default function AddActivity() {
           setOpen={setOpenDropDown}
           setValue={setActivityType}
           setItems={() => {}}
-          // style={styles.dropdown}
           multiple={false}
         />
       </View>
