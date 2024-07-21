@@ -14,10 +14,10 @@ export default function ItemsList({ collection }) {
     { id: 1, name: "Apple" },
     { id: 2, name: "Banana" },
   ];
-  const data = collection === "activities" ? activitiesData : dietData;
+  const data = collection === "Activities" ? activitiesData : dietData;
 
   const handleItemPress = (item) => {
-    const editScreen = collection === "activities" ? "AddActivity" : "AddDiet";
+    const editScreen = collection === "Activities" ? "AddActivity" : "AddDiet";
     navigation.navigate(editScreen, { item });
   };
 
@@ -25,7 +25,6 @@ export default function ItemsList({ collection }) {
     <View style={styles.container}>
       <FlatList
         data={data}
-        // keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Pressable onPress={() => handleItemPress(item)}>
             <View style={styles.item}>

@@ -3,9 +3,8 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
-import Activities from "./Activities";
-import Diet from "./Diet";
 import Settings from "./Settings";
+import Contents from "./Contents";
 import PressableButton from "../components/PressableButton";
 
 const Tab = createBottomTabNavigator();
@@ -16,7 +15,8 @@ export default function Home() {
     <Tab.Navigator>
       <Tab.Screen
         name="Activities"
-        component={Activities}
+        component={Contents}
+        initialParams={{ content: "Activities" }}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="directions-run" size={size} color={color} />
@@ -33,7 +33,8 @@ export default function Home() {
       />
       <Tab.Screen
         name="Diet"
-        component={Diet}
+        component={Contents}
+        initialParams={{ content: "Diet" }}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="fastfood" size={size} color={color} />
