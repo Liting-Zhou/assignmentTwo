@@ -160,10 +160,10 @@ export default function AddDiet({ route }) {
       <View style={styles.bottomContainer}>
         {special && (
           <View style={styles.textCheckboxContainer}>
-            <Text>
+            <CustomText>
               This item is marked as special. Select the checkbox if you would
               like to approve it.
-            </Text>
+            </CustomText>
             <Checkbox
               style={styles.checkbox}
               value={isChecked}
@@ -173,8 +173,16 @@ export default function AddDiet({ route }) {
           </View>
         )}
         <View style={styles.buttonContainer}>
-          <PressableButton title="Cancel" onPress={handleCancel} />
-          <PressableButton title="Save" onPress={handleSave} />
+          <PressableButton
+            title="Cancel"
+            onPress={handleCancel}
+            style={{ width: "40%", backgroundColor: colors.cancelButton }}
+          />
+          <PressableButton
+            title="Save"
+            onPress={handleSave}
+            style={{ width: "40%" }}
+          />
         </View>
       </View>
     </View>
@@ -189,14 +197,13 @@ const styles = StyleSheet.create({
   formItemContainer: {
     padding: 10,
   },
-  // label: {
-  //   padding: 5,
-  // },
+
   description: {
     height: 80,
   },
   checkbox: {
-    marginLeft: 10,
+    marginLeft: 5,
+    borderColor: colors.textAndBorder,
   },
   bottomContainer: {
     flex: 1,
@@ -204,12 +211,11 @@ const styles = StyleSheet.create({
     paddingVertical: 80,
   },
   textCheckboxContainer: {
-    paddingBottom: 10,
-    paddingLeft: 15,
+    paddingBottom: 5,
+    paddingLeft: 5,
     flexDirection: "row",
     alignItems: "center",
   },
-
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",

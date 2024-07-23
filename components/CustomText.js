@@ -12,5 +12,6 @@ export default function CustomText({ children }) {
 const styles = StyleSheet.create({
   text: {
     padding: 5,
+    fontWeight: "bold",
   },
 });

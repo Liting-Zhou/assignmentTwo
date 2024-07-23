@@ -178,16 +178,12 @@ export default function AddActivity({ route }) {
       <View style={styles.bottomContainer}>
         {special && (
           <View style={styles.textCheckboxContainer}>
-            {/* <Text>
-              This item is marked as special. Select the checkbox if you would
-              like to approve it.
-            </Text> */}
             <CustomText>
               This item is marked as special. Select the checkbox if you would
               like to approve it.
             </CustomText>
             <Checkbox
-              style={[styles.checkbox]}
+              style={styles.checkbox}
               value={isChecked}
               onValueChange={setChecked}
               color={isChecked ? colors.textAndBorder : undefined}
@@ -220,12 +216,9 @@ const styles = StyleSheet.create({
   formItemContainer: {
     padding: 10,
   },
-  // label: {
-  //   padding: 5,
-  // },
 
   checkbox: {
-    marginLeft: 10,
+    marginLeft: 5,
     borderColor: colors.textAndBorder,
   },
   bottomContainer: {
@@ -235,7 +228,7 @@ const styles = StyleSheet.create({
   },
   textCheckboxContainer: {
     paddingBottom: 5,
-    paddingLeft: 15,
+    paddingLeft: 5,
     flexDirection: "row",
     alignItems: "center",
   },
