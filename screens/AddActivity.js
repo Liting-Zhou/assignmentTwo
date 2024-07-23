@@ -74,9 +74,18 @@ export default function AddActivity({ route }) {
     }
     const special = isSpecialActivity();
     setSpecial(special);
+    //alert the user to confirm change in Edit mode
+    if (route.params) {
+      Alert.alert("Important", "Are you sure you want to save these changes?", [
+        {
+          text: "No",
+        },
+        { text: "Yes", onPress: () => navigation.goBack() },
+      ]);
+    } else {
+      navigation.goBack();
+    }
     // todo: save the activity
-    navigation.goBack();
-    console.log("Save", special);
   };
 
   const handleCancel = () => {

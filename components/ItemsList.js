@@ -7,7 +7,7 @@ export default function ItemsList({ collection }) {
     {
       id: 1,
       name: "running",
-      quantity: "30",
+      quantity: "80",
       date: new Date("2023-10-05"),
       special: true,
     },
