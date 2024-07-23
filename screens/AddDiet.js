@@ -40,7 +40,13 @@ export default function AddDiet({ route }) {
   }, []);
 
   const handleDelete = () => {
-    navigation.goBack();
+    Alert.alert("Delete", "Are you sure you want to delete this item?", [
+      {
+        text: "No",
+      },
+      { text: "Yes", onPress: () => navigation.goBack() },
+    ]);
+    //todo: delete the item
   };
 
   const handleDateChange = (event, selectedDate) => {
@@ -69,11 +75,38 @@ export default function AddDiet({ route }) {
     if (!validateForm()) {
       return;
     }
+
+    //alert the user to confirm change in Edit mode
+    if (route.params) {
+      const nameOld = route.params.itemData.name;
+      const quantityOld = route.params.itemData.quantity;
+      const dateOld = parsedDate;
+
+      if (
+        nameOld !== description ||
+        quantityOld !== calories ||
+        dateOld !== date
+      ) {
+        Alert.alert(
+          "Important",
+          "Are you sure you want to save these changes?",
+          [
+            {
+              text: "No",
+            },
+            { text: "Yes", onPress: () => navigation.goBack() },
+          ]
+        );
+      } else {
+        navigation.goBack();
+      }
+    } else {
+      navigation.goBack();
+    }
+
     const special = isSpecial();
-    navigation.goBack();
-    //todo: save the data
-    console.log("Save", special);
     setSpecial(special);
+    //todo: save the data
   };
 
   const handleCancel = () => {

@@ -43,7 +43,13 @@ export default function AddActivity({ route }) {
   }, []);
 
   const handleDelete = () => {
-    navigation.goBack();
+    Alert.alert("Delete", "Are you sure you want to delete this item?", [
+      {
+        text: "No",
+      },
+      { text: "Yes", onPress: () => navigation.goBack() },
+    ]);
+    //todo: delete the item
   };
 
   const handleDateChange = (event, selectedDate) => {
@@ -72,19 +78,36 @@ export default function AddActivity({ route }) {
     if (!validateForm()) {
       return;
     }
-    const special = isSpecialActivity();
-    setSpecial(special);
+
     //alert the user to confirm change in Edit mode
     if (route.params) {
-      Alert.alert("Important", "Are you sure you want to save these changes?", [
-        {
-          text: "No",
-        },
-        { text: "Yes", onPress: () => navigation.goBack() },
-      ]);
+      const nameOld = route.params.itemData.name;
+      const quantityOld = route.params.itemData.quantity;
+      const dateOld = parsedDate;
+
+      if (
+        nameOld !== activityType ||
+        quantityOld !== duration ||
+        dateOld !== date
+      ) {
+        Alert.alert(
+          "Important",
+          "Are you sure you want to save these changes?",
+          [
+            {
+              text: "No",
+            },
+            { text: "Yes", onPress: () => navigation.goBack() },
+          ]
+        );
+      } else {
+        navigation.goBack();
+      }
     } else {
       navigation.goBack();
     }
+    const special = isSpecialActivity();
+    setSpecial(special);
     // todo: save the activity
   };
 
