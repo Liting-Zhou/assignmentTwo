@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -7,11 +6,11 @@ import Home from "./screens/Home";
 import AddActivity from "./screens/AddActivity";
 import AddDiet from "./screens/AddDiet";
 import { ThemeProvider } from "./ThemeContext";
+import colors from "./colors";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  // const { theme, toggleTheme } = useContext(ThemeContext);
   return (
     <ThemeProvider>
       <NavigationContainer>
@@ -26,12 +25,22 @@ export default function App() {
           <Stack.Screen
             name="AddActivity"
             component={AddActivity}
-            options={{ headerBackTitleVisible: false }}
+            options={{
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: colors.headerBackground,
+              },
+            }}
           />
           <Stack.Screen
             name="AddDiet"
             component={AddDiet}
-            options={{ headerBackTitleVisible: false }}
+            options={{
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: colors.headerBackground,
+              },
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

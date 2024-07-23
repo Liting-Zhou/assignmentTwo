@@ -1,6 +1,9 @@
 import Checkbox from "expo-checkbox";
 
 const colors = {
+  headerBackground: "#3E3277",
+  header: "#FFFFFF",
+  tabIconFocused: "gold",
   button: "blue",
   buttonText: "#FFFFFF",
   inputBorder: "black",
