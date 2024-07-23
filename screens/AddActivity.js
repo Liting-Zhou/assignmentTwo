@@ -2,14 +2,17 @@ import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import Checkbox from "expo-checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { ThemeContext } from "../ThemeContext";
 import PressableButton from "../components/PressableButton";
 import Input from "../components/Input";
 import colors from "../colors";
+import CustomText from "../components/CustomText";
 
 export default function AddActivity({ route }) {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   // if an item is clicked, the route will have the item data
   // otherwise, use default values
   const itemData = route.params
@@ -35,7 +38,11 @@ export default function AddActivity({ route }) {
         route.params ? (
           <Pressable onPress={handleDelete}>
             <View style={{ marginRight: 10 }}>
-              <MaterialIcons name="delete-forever" size={24} color="black" />
+              <MaterialIcons
+                name="delete-forever"
+                size={24}
+                color={colors.whiteText}
+              />
             </View>
           </Pressable>
         ) : null,
@@ -116,9 +123,12 @@ export default function AddActivity({ route }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+    >
       <View style={[styles.formItemContainer, { zIndex: 1000 }]}>
-        <Text style={styles.label}>Activity*</Text>
+        {/* <Text style={styles.label}>Activity*</Text> */}
+        <CustomText>Activity*</CustomText>
         <DropDownPicker
           open={openDropDown}
           value={activityType}
@@ -135,14 +145,20 @@ export default function AddActivity({ route }) {
           setValue={setActivityType}
           setItems={() => {}}
           multiple={false}
+          textStyle={{ color: theme.textColor }}
+          style={{
+            borderColor: colors.textAndBorder,
+            backgroundColor: theme.backgroundColor,
+          }}
         />
       </View>
       <View style={styles.formItemContainer}>
-        <Text style={styles.label}>Duration (min)*</Text>
+        <CustomText>Duration (min)*</CustomText>
         <Input value={duration} onChangeText={setDuration} />
       </View>
       <View style={styles.formItemContainer}>
-        <Text style={styles.label}>Date*</Text>
+        {/* <Text style={styles.label}>Date*</Text> */}
+        <CustomText>Date*</CustomText>
         <Pressable onPress={() => setShowDatePicker(!showDatePicker)}>
           <Input
             value={date.toDateString()}
@@ -162,21 +178,33 @@ export default function AddActivity({ route }) {
       <View style={styles.bottomContainer}>
         {special && (
           <View style={styles.textCheckboxContainer}>
-            <Text>
+            {/* <Text>
               This item is marked as special. Select the checkbox if you would
               like to approve it.
-            </Text>
+            </Text> */}
+            <CustomText>
+              This item is marked as special. Select the checkbox if you would
+              like to approve it.
+            </CustomText>
             <Checkbox
-              style={styles.checkbox}
+              style={[styles.checkbox]}
               value={isChecked}
               onValueChange={setChecked}
-              color={isChecked ? colors.Checkbox : undefined}
+              color={isChecked ? colors.textAndBorder : undefined}
             />
           </View>
         )}
         <View style={styles.buttonContainer}>
-          <PressableButton title="Cancel" onPress={handleCancel} />
-          <PressableButton title="Save" onPress={handleSave} />
+          <PressableButton
+            title="Cancel"
+            onPress={handleCancel}
+            style={{ width: "40%", backgroundColor: colors.cancelButton }}
+          />
+          <PressableButton
+            title="Save"
+            onPress={handleSave}
+            style={{ width: "40%" }}
+          />
         </View>
       </View>
     </View>
@@ -192,12 +220,13 @@ const styles = StyleSheet.create({
   formItemContainer: {
     padding: 10,
   },
-  label: {
-    padding: 5,
-  },
+  // label: {
+  //   padding: 5,
+  // },
 
   checkbox: {
     marginLeft: 10,
+    borderColor: colors.textAndBorder,
   },
   bottomContainer: {
     flex: 1,
@@ -205,7 +234,7 @@ const styles = StyleSheet.create({
     paddingVertical: 80,
   },
   textCheckboxContainer: {
-    paddingBottom: 10,
+    paddingBottom: 5,
     paddingLeft: 15,
     flexDirection: "row",
     alignItems: "center",

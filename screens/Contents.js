@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useContext } from "react";
 import ItemsList from "../components/ItemsList";
 import { ThemeContext } from "../ThemeContext";
+import colors from "../colors";
 
 export default function Contents({ route }) {
   const { theme, toggleTheme } = useContext(ThemeContext);

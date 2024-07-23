@@ -18,6 +18,9 @@ export default function Home() {
         tabBarStyle: {
           backgroundColor: colors.headerBackground,
         },
+        tabBarLabelStyle: {
+          fontWeight: "bold",
+        },
         tabBarActiveTintColor: colors.tabIconFocused,
       }}
     >
@@ -30,21 +33,21 @@ export default function Home() {
             <MaterialIcons
               name="directions-run"
               size={size}
-              color={focused ? colors.tabIconFocused : colors.header}
+              color={focused ? colors.tabIconFocused : colors.whiteText}
             />
           ),
           headerStyle: {
             backgroundColor: colors.headerBackground,
           },
-          headerTintColor: colors.header,
+          headerTintColor: colors.whiteText,
           headerRight: () => (
             <Pressable onPress={() => navigation.navigate("AddActivity")}>
               <View style={{ flexDirection: "row", marginRight: 10 }}>
-                <MaterialIcons name="add" size={24} color={colors.header} />
+                <MaterialIcons name="add" size={24} color={colors.whiteText} />
                 <MaterialIcons
                   name="directions-run"
                   size={24}
-                  color={colors.header}
+                  color={colors.whiteText}
                 />
               </View>
             </Pressable>
@@ -60,21 +63,21 @@ export default function Home() {
             <MaterialIcons
               name="fastfood"
               size={size}
-              color={focused ? colors.tabIconFocused : colors.header}
+              color={focused ? colors.tabIconFocused : colors.whiteText}
             />
           ),
           headerStyle: {
             backgroundColor: colors.headerBackground,
           },
-          headerTintColor: colors.header,
+          headerTintColor: colors.whiteText,
           headerRight: () => (
             <Pressable onPress={() => navigation.navigate("AddDiet")}>
               <View style={{ flexDirection: "row", marginRight: 10 }}>
-                <MaterialIcons name="add" size={24} color={colors.header} />
+                <MaterialIcons name="add" size={24} color={colors.whiteText} />
                 <MaterialIcons
                   name="fastfood"
                   size={24}
-                  color={colors.header}
+                  color={colors.whiteText}
                 />
               </View>
             </Pressable>
@@ -89,13 +92,13 @@ export default function Home() {
             <MaterialIcons
               name="settings"
               size={size}
-              color={focused ? colors.tabIconFocused : colors.header}
+              color={focused ? colors.tabIconFocused : colors.whiteText}
             />
           ),
           headerStyle: {
             backgroundColor: colors.headerBackground,
           },
-          headerTintColor: colors.header,
+          headerTintColor: colors.whiteText,
         }}
       />
     </Tab.Navigator>

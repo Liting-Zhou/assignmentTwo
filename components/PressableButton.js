@@ -4,7 +4,7 @@ import colors from "../colors";
 
 export default function PressableButton({ title, children, style, onPress }) {
   return (
-    <Pressable style={styles.button} onPress={onPress}>
+    <Pressable style={[styles.button, style]} onPress={onPress}>
       <Text style={styles.buttonText}>{title}</Text>
       {children}
     </Pressable>
@@ -13,7 +13,7 @@ export default function PressableButton({ title, children, style, onPress }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: colors.button,
+    backgroundColor: colors.headerBackground,
     padding: 10,
     margin: 10,
     borderRadius: 5,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: colors.buttonText,
+    color: colors.whiteText,
     fontSize: 16,
   },
 });

@@ -30,6 +30,7 @@ export default function App() {
               headerStyle: {
                 backgroundColor: colors.headerBackground,
               },
+              headerTintColor: colors.whiteText,
             }}
           />
           <Stack.Screen
@@ -40,6 +41,7 @@ export default function App() {
               headerStyle: {
                 backgroundColor: colors.headerBackground,
               },
+              headerTintColor: colors.whiteText,
             }}
           />
         </Stack.Navigator>

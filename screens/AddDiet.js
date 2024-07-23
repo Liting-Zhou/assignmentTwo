@@ -1,14 +1,17 @@
 import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useContext } from "react";
 import Checkbox from "expo-checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { ThemeContext } from "../ThemeContext";
 import Input from "../components/Input";
 import PressableButton from "../components/PressableButton";
+import CustomText from "../components/CustomText";
 import colors from "../colors";
 
 export default function AddDiet({ route }) {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   // if an item is clicked, the route will have the item data
   // otherwise, use default values
   const itemData = route.params
@@ -32,7 +35,11 @@ export default function AddDiet({ route }) {
         route.params ? (
           <Pressable onPress={handleDelete}>
             <View style={{ marginRight: 10 }}>
-              <MaterialIcons name="delete-forever" size={24} color="black" />
+              <MaterialIcons
+                name="delete-forever"
+                size={24}
+                color={colors.whiteText}
+              />
             </View>
           </Pressable>
         ) : null,
@@ -114,9 +121,11 @@ export default function AddDiet({ route }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+    >
       <View style={styles.formItemContainer}>
-        <Text style={styles.label}>Description*</Text>
+        <CustomText>Description*</CustomText>
         <Input
           value={description}
           onChangeText={setDescription}
@@ -124,11 +133,14 @@ export default function AddDiet({ route }) {
         />
       </View>
       <View style={styles.formItemContainer}>
-        <Text style={styles.label}>Calories*</Text>
+        {/* <Text style={styles.label}>Calories*</Text>
+         */}
+        <CustomText>Calories*</CustomText>
         <Input value={calories} onChangeText={setCalories} />
       </View>
       <View style={styles.formItemContainer}>
-        <Text style={styles.label}>Date*</Text>
+        {/* <Text style={styles.label}>Date*</Text> */}
+        <CustomText>Date*</CustomText>
         <Pressable onPress={() => setShowDatePicker(!showDatePicker)}>
           <Input
             value={date.toDateString()}
@@ -156,7 +168,7 @@ export default function AddDiet({ route }) {
               style={styles.checkbox}
               value={isChecked}
               onValueChange={setChecked}
-              color={isChecked ? colors.Checkbox : undefined}
+              color={isChecked ? colors.textAndBorder : undefined}
             />
           </View>
         )}
@@ -177,9 +189,9 @@ const styles = StyleSheet.create({
   formItemContainer: {
     padding: 10,
   },
-  label: {
-    padding: 5,
-  },
+  // label: {
+  //   padding: 5,
+  // },
   description: {
     height: 80,
   },
