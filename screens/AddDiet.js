@@ -1,22 +1,26 @@
 import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
 import React, { useState, useLayoutEffect } from "react";
+import Checkbox from "expo-checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Input from "../components/Input";
 import PressableButton from "../components/PressableButton";
+import colors from "../colors";
 
 export default function AddDiet({ route }) {
   // if an item is clicked, the route will have the item data
   // otherwise, use default values
   const itemData = route.params
     ? route.params.itemData
-    : { date: new Date(), id: 0, name: "", quantity: "" };
+    : { date: new Date(), id: 0, name: "", quantity: "", special: false };
   const parsedDate = new Date(itemData.date); //todo: fix this
   const [description, setDescription] = useState(itemData.name);
   const [calories, setCalories] = useState(itemData.quantity);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(parsedDate);
+  const [special, setSpecial] = useState(itemData.special);
+  const [isChecked, setChecked] = useState(false);
   const navigation = useNavigation();
 
   // if route.params exists, set the title to "Edit"
@@ -67,7 +71,9 @@ export default function AddDiet({ route }) {
     }
     const special = isSpecial();
     navigation.goBack();
+    //todo: save the data
     console.log("Save", special);
+    setSpecial(special);
   };
 
   const handleCancel = () => {
@@ -106,10 +112,25 @@ export default function AddDiet({ route }) {
           />
         )}
       </View>
-
-      <View style={styles.buttonContainer}>
-        <PressableButton title="Cancel" onPress={handleCancel} />
-        <PressableButton title="Save" onPress={handleSave} />
+      <View style={styles.bottomContainer}>
+        {special && (
+          <View style={styles.textCheckboxContainer}>
+            <Text>
+              This item is marked as special. Select the checkbox if you would
+              like to approve it.
+            </Text>
+            <Checkbox
+              style={styles.checkbox}
+              value={isChecked}
+              onValueChange={setChecked}
+              color={isChecked ? colors.Checkbox : undefined}
+            />
+          </View>
+        )}
+        <View style={styles.buttonContainer}>
+          <PressableButton title="Cancel" onPress={handleCancel} />
+          <PressableButton title="Save" onPress={handleSave} />
+        </View>
       </View>
     </View>
   );
@@ -129,11 +150,23 @@ const styles = StyleSheet.create({
   description: {
     height: 80,
   },
-  buttonContainer: {
+  checkbox: {
+    marginLeft: 10,
+  },
+  bottomContainer: {
     flex: 1,
+    justifyContent: "flex-end",
+    paddingVertical: 80,
+  },
+  textCheckboxContainer: {
+    paddingBottom: 10,
+    paddingLeft: 15,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "flex-end",
-    paddingVertical: 100,
   },
 });

@@ -4,13 +4,37 @@ import Item from "./Item";
 
 export default function ItemsList({ collection }) {
   const activitiesData = [
-    { id: 1, name: "running", quantity: "30", date: new Date("2023-10-05") },
-    { id: 2, name: "swimming", quantity: "45", date: new Date("2023-11-05") },
+    {
+      id: 1,
+      name: "running",
+      quantity: "30",
+      date: new Date("2023-10-05"),
+      special: true,
+    },
+    {
+      id: 2,
+      name: "swimming",
+      quantity: "45",
+      date: new Date("2023-11-05"),
+      special: false,
+    },
   ];
 
   const dietData = [
-    { id: 1, name: "apple", quantity: "95", date: new Date("2023-01-05") },
-    { id: 2, name: "banana", quantity: "105", date: new Date("2023-02-05") },
+    {
+      id: 1,
+      name: "apple",
+      quantity: "895",
+      date: new Date("2023-01-05"),
+      special: true,
+    },
+    {
+      id: 2,
+      name: "banana",
+      quantity: "105",
+      date: new Date("2023-02-05"),
+      special: false,
+    },
   ];
   const data = collection === "Activities" ? activitiesData : dietData;
 

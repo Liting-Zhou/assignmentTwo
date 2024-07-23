@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import Checkbox from "expo-checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState, useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import PressableButton from "../components/PressableButton";
 import Input from "../components/Input";
+import colors from "../colors";
 
 export default function AddActivity({ route }) {
   // if an item is clicked, the route will have the item data
@@ -19,6 +21,8 @@ export default function AddActivity({ route }) {
   const [duration, setDuration] = useState(itemData.quantity);
   const [date, setDate] = useState(parsedDate);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [special, setSpecial] = useState(itemData.special);
+  const [isChecked, setChecked] = useState(false);
   const specialActivities = ["running", "weights"];
   const navigation = useNavigation();
 
@@ -69,6 +73,7 @@ export default function AddActivity({ route }) {
       return;
     }
     const special = isSpecialActivity();
+    setSpecial(special);
     // todo: save the activity
     navigation.goBack();
     console.log("Save", special);
@@ -122,10 +127,25 @@ export default function AddActivity({ route }) {
           />
         )}
       </View>
-
-      <View style={styles.buttonContainer}>
-        <PressableButton title="Cancel" onPress={handleCancel} />
-        <PressableButton title="Save" onPress={handleSave} />
+      <View style={styles.bottomContainer}>
+        {special && (
+          <View style={styles.textCheckboxContainer}>
+            <Text>
+              This item is marked as special. Select the checkbox if you would
+              like to approve it.
+            </Text>
+            <Checkbox
+              style={styles.checkbox}
+              value={isChecked}
+              onValueChange={setChecked}
+              color={isChecked ? colors.Checkbox : undefined}
+            />
+          </View>
+        )}
+        <View style={styles.buttonContainer}>
+          <PressableButton title="Cancel" onPress={handleCancel} />
+          <PressableButton title="Save" onPress={handleSave} />
+        </View>
       </View>
     </View>
   );
@@ -144,11 +164,23 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 
-  buttonContainer: {
+  checkbox: {
+    marginLeft: 10,
+  },
+  bottomContainer: {
     flex: 1,
+    justifyContent: "flex-end",
+    paddingVertical: 80,
+  },
+  textCheckboxContainer: {
+    paddingBottom: 10,
+    paddingLeft: 15,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "flex-end",
-    paddingVertical: 100,
   },
 });
