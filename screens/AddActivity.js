@@ -10,6 +10,7 @@ import PressableButton from "../components/PressableButton";
 import Input from "../components/Input";
 import colors from "../colors";
 import CustomText from "../components/CustomText";
+import { writeToDB } from "../firebase/firebaseHelper";
 
 export default function AddActivity({ route }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -115,7 +116,16 @@ export default function AddActivity({ route }) {
     }
     const special = isSpecialActivity();
     setSpecial(special);
-    // todo: save the activity
+
+    //construct the data
+    const data = {
+      name: activityType,
+      quantity: duration,
+      date: date.toDateString(),
+      special: isSpecialActivity(),
+    };
+    // save the data
+    writeToDB(data, "Activities");
   };
 
   const handleCancel = () => {

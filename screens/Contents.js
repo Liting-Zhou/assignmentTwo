@@ -7,11 +7,12 @@ import colors from "../colors";
 export default function Contents({ route }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const content = route.params.content;
+  console.log("content: ", content);
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}
     >
-      <ItemsList collection={content} />
+      <ItemsList collectionName={content} />
     </View>
   );
 }

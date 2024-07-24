@@ -9,6 +9,7 @@ import Input from "../components/Input";
 import PressableButton from "../components/PressableButton";
 import CustomText from "../components/CustomText";
 import colors from "../colors";
+import { writeToDB } from "../firebase/firebaseHelper";
 
 export default function AddDiet({ route }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -17,11 +18,12 @@ export default function AddDiet({ route }) {
   const itemData = route.params
     ? route.params.itemData
     : { date: new Date(), id: 0, name: "", quantity: "", special: false };
-  const parsedDate = new Date(itemData.date); //todo: fix this
+  const parsedDate = new Date(itemData.date);
   const [description, setDescription] = useState(itemData.name);
   const [calories, setCalories] = useState(itemData.quantity);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(parsedDate);
+  // console.log("date pass to Edit mode: ", date);
   const [special, setSpecial] = useState(itemData.special);
   const [isChecked, setChecked] = useState(false);
   const navigation = useNavigation();
@@ -111,9 +113,17 @@ export default function AddDiet({ route }) {
       navigation.goBack();
     }
 
-    const special = isSpecial();
-    setSpecial(special);
-    //todo: save the data
+    // const special = isSpecial();
+    // setSpecial(special);
+    //construct the data
+    const data = {
+      name: description,
+      quantity: calories,
+      date: date.toDateString(),
+      special: isSpecial(),
+    };
+    // save the data
+    writeToDB(data, "Diet");
   };
 
   const handleCancel = () => {

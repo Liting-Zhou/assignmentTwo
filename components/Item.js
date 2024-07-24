@@ -3,17 +3,13 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../colors";
 
-export default function Item({ itemData, collection }) {
+export default function Item({ itemData, collectionName }) {
   const navigation = useNavigation();
-
+  // console.log("itemData in Item.js: ", itemData);
   const handleItemPress = (itemData) => {
-    const editScreen = collection === "Activities" ? "AddActivity" : "AddDiet";
-    navigation.navigate(editScreen, {
-      itemData: {
-        ...itemData,
-        date: itemData.date.toISOString(),
-      },
-    });
+    const editScreen =
+      collectionName === "Activities" ? "AddActivity" : "AddDiet";
+    navigation.navigate(editScreen, { itemData });
   };
 
   return (
@@ -22,10 +18,10 @@ export default function Item({ itemData, collection }) {
       style={styles.container}
     >
       <Text style={styles.name}>{itemData.name}</Text>
-      <Text style={styles.date}>{itemData.date.toDateString()}</Text>
+      <Text style={styles.date}>{itemData.date}</Text>
       <Text style={styles.quantity}>
         {itemData.quantity}
-        {collection === "Activities" ? " min" : ""}
+        {collectionName === "Activities" ? " min" : ""}
       </Text>
     </Pressable>
   );
