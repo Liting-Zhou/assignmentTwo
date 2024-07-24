@@ -133,13 +133,10 @@ export default function AddDiet({ route }) {
         />
       </View>
       <View style={styles.formItemContainer}>
-        {/* <Text style={styles.label}>Calories*</Text>
-         */}
         <CustomText>Calories*</CustomText>
         <Input value={calories} onChangeText={setCalories} />
       </View>
       <View style={styles.formItemContainer}>
-        {/* <Text style={styles.label}>Date*</Text> */}
         <CustomText>Date*</CustomText>
         <Pressable onPress={() => setShowDatePicker(!showDatePicker)}>
           <Input
