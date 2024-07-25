@@ -23,13 +23,13 @@ export async function updateDocInDB(id, data, collectionName) {
   }
 }
 
-// export async function deleteFromDB(id, collectionName) {
-//   try {
-//     await deleteDoc(doc(db, collectionName, id));
-//   } catch (e) {
-//     console.log("delete from db", e);
-//   }
-// }
+export async function deleteFromDB(id, collectionName) {
+  try {
+    await deleteDoc(doc(db, collectionName, id));
+  } catch (e) {
+    console.log("delete from db", e);
+  }
+}
 
 // export async function addWarningToGoal(id, collectionName) {
 //   try {

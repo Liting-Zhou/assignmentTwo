@@ -10,7 +10,11 @@ import PressableButton from "../components/PressableButton";
 import Input from "../components/Input";
 import colors from "../colors";
 import CustomText from "../components/CustomText";
-import { writeToDB, updateDocInDB } from "../firebase/firebaseHelper";
+import {
+  writeToDB,
+  updateDocInDB,
+  deleteFromDB,
+} from "../firebase/firebaseHelper";
 
 export default function AddActivity({ route }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -19,7 +23,7 @@ export default function AddActivity({ route }) {
   const itemData = route.params
     ? route.params.itemData
     : { date: new Date(), id: 0, name: "", quantity: "" };
-  const parsedDate = new Date(itemData.date); //todo: fix this
+  const parsedDate = new Date(itemData.date); //parse the date string to Date object
   const [activityType, setActivityType] = useState(itemData.name);
   const [openDropDown, setOpenDropDown] = useState(false);
   const [duration, setDuration] = useState(itemData.quantity);
@@ -37,7 +41,7 @@ export default function AddActivity({ route }) {
       title: headerTitle,
       headerRight: () =>
         route.params ? (
-          <Pressable onPress={handleDelete}>
+          <Pressable onPress={() => handleDelete(route.params.itemData.id)}>
             <View style={{ marginRight: 10 }}>
               <MaterialIcons
                 name="delete-forever"
@@ -50,14 +54,19 @@ export default function AddActivity({ route }) {
     });
   }, []);
 
-  const handleDelete = () => {
+  const handleDelete = (id) => {
     Alert.alert("Delete", "Are you sure you want to delete this item?", [
       {
         text: "No",
       },
-      { text: "Yes", onPress: () => navigation.goBack() },
+      {
+        text: "Yes",
+        onPress: () => {
+          deleteFromDB(id, "Activities");
+          navigation.goBack();
+        },
+      },
     ]);
-    //todo: delete the item
   };
 
   const handleDateChange = (event, selectedDate) => {
@@ -129,21 +138,7 @@ export default function AddActivity({ route }) {
       writeToDB(data, "Activities");
       navigation.goBack();
     }
-    // const special = isSpecialActivity();
-    // setSpecial(special);
   };
-
-  // const saveDataToDB = () => {
-  //   //construct the data
-  //   const data = {
-  //     name: activityType,
-  //     quantity: duration,
-  //     date: date.toDateString(),
-  //     special: isSpecialActivity(),
-  //   };
-  //   // save the data
-  //   writeToDB(data, "Activities");
-  // };
 
   const handleCancel = () => {
     navigation.goBack();
@@ -154,7 +149,6 @@ export default function AddActivity({ route }) {
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}
     >
       <View style={[styles.formItemContainer, { zIndex: 1000 }]}>
-        {/* <Text style={styles.label}>Activity*</Text> */}
         <CustomText>Activity*</CustomText>
         <DropDownPicker
           open={openDropDown}
@@ -184,7 +178,6 @@ export default function AddActivity({ route }) {
         <Input value={duration} onChangeText={setDuration} />
       </View>
       <View style={styles.formItemContainer}>
-        {/* <Text style={styles.label}>Date*</Text> */}
         <CustomText>Date*</CustomText>
         <Pressable onPress={() => setShowDatePicker(!showDatePicker)}>
           <Input

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../colors";
 
@@ -18,6 +19,15 @@ export default function Item({ itemData, collectionName }) {
       style={styles.container}
     >
       <Text style={styles.name}>{itemData.name}</Text>
+      {itemData.special && (
+        <View style={{ paddingRight: 5 }}>
+          <MaterialIcons
+            name="warning-amber"
+            size={24}
+            color={colors.tabIconFocused}
+          />
+        </View>
+      )}
       <Text style={styles.date}>{itemData.date}</Text>
       <Text style={styles.quantity}>
         {itemData.quantity}
