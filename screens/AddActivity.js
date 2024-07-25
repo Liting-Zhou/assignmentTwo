@@ -10,7 +10,7 @@ import PressableButton from "../components/PressableButton";
 import Input from "../components/Input";
 import colors from "../colors";
 import CustomText from "../components/CustomText";
-import { writeToDB } from "../firebase/firebaseHelper";
+import { writeToDB, updateDocInDB } from "../firebase/firebaseHelper";
 
 export default function AddActivity({ route }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -87,6 +87,14 @@ export default function AddActivity({ route }) {
       return;
     }
 
+    //construct the data
+    const data = {
+      name: activityType,
+      quantity: duration,
+      date: date.toDateString(),
+      special: isSpecialActivity(),
+    };
+
     //alert the user to confirm change in Edit mode
     if (route.params) {
       const nameOld = route.params.itemData.name;
@@ -105,28 +113,37 @@ export default function AddActivity({ route }) {
             {
               text: "No",
             },
-            { text: "Yes", onPress: () => navigation.goBack() },
+            {
+              text: "Yes",
+              onPress: () => {
+                updateDocInDB(route.params.itemData.id, data, "Activities");
+                navigation.goBack();
+              },
+            },
           ]
         );
       } else {
         navigation.goBack();
       }
     } else {
+      writeToDB(data, "Activities");
       navigation.goBack();
     }
-    const special = isSpecialActivity();
-    setSpecial(special);
-
-    //construct the data
-    const data = {
-      name: activityType,
-      quantity: duration,
-      date: date.toDateString(),
-      special: isSpecialActivity(),
-    };
-    // save the data
-    writeToDB(data, "Activities");
+    // const special = isSpecialActivity();
+    // setSpecial(special);
   };
+
+  // const saveDataToDB = () => {
+  //   //construct the data
+  //   const data = {
+  //     name: activityType,
+  //     quantity: duration,
+  //     date: date.toDateString(),
+  //     special: isSpecialActivity(),
+  //   };
+  //   // save the data
+  //   writeToDB(data, "Activities");
+  // };
 
   const handleCancel = () => {
     navigation.goBack();

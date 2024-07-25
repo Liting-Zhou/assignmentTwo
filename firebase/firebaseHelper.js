@@ -15,6 +15,14 @@ export async function writeToDB(data, collectionName) {
   }
 }
 
+export async function updateDocInDB(id, data, collectionName) {
+  try {
+    await updateDoc(doc(db, collectionName, id), data);
+  } catch (e) {
+    console.log("update doc", e);
+  }
+}
+
 // export async function deleteFromDB(id, collectionName) {
 //   try {
 //     await deleteDoc(doc(db, collectionName, id));

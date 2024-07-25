@@ -21,7 +21,7 @@ export default function Item({ itemData, collectionName }) {
       <Text style={styles.date}>{itemData.date}</Text>
       <Text style={styles.quantity}>
         {itemData.quantity}
-        {collectionName === "Activities" ? " min" : ""}
+        {collectionName === "Activities" ? " min" : " cal"}
       </Text>
     </Pressable>
   );
@@ -53,13 +53,15 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontWeight: "bold",
     fontSize: 12,
+    textAlign: "center",
   },
   quantity: {
-    flex: 1,
+    flex: 1.5,
     padding: 5,
     color: colors.textAndBorder,
     backgroundColor: colors.whiteText,
     fontWeight: "bold",
     fontSize: 12,
+    textAlign: "center",
   },
 });

@@ -9,7 +9,7 @@ import Input from "../components/Input";
 import PressableButton from "../components/PressableButton";
 import CustomText from "../components/CustomText";
 import colors from "../colors";
-import { writeToDB } from "../firebase/firebaseHelper";
+import { writeToDB, updateDocInDB } from "../firebase/firebaseHelper";
 
 export default function AddDiet({ route }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -84,7 +84,13 @@ export default function AddDiet({ route }) {
     if (!validateForm()) {
       return;
     }
-
+    //construct the data
+    const data = {
+      name: description,
+      quantity: calories,
+      date: date.toDateString(),
+      special: isSpecial(),
+    };
     //alert the user to confirm change in Edit mode
     if (route.params) {
       const nameOld = route.params.itemData.name;
@@ -103,27 +109,28 @@ export default function AddDiet({ route }) {
             {
               text: "No",
             },
-            { text: "Yes", onPress: () => navigation.goBack() },
+            {
+              text: "Yes",
+              onPress: () => {
+                updateDocInDB(route.params.itemData.id, data, "Diet");
+                navigation.goBack();
+              },
+            },
           ]
         );
       } else {
         navigation.goBack();
       }
     } else {
+      writeToDB(data, "Diet");
       navigation.goBack();
     }
 
     // const special = isSpecial();
     // setSpecial(special);
-    //construct the data
-    const data = {
-      name: description,
-      quantity: calories,
-      date: date.toDateString(),
-      special: isSpecial(),
-    };
+
     // save the data
-    writeToDB(data, "Diet");
+    // writeToDB(data, "Diet");
   };
 
   const handleCancel = () => {
