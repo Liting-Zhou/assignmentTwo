@@ -19,15 +19,15 @@ export default function Item({ itemData, collectionName }) {
       style={styles.container}
     >
       <Text style={styles.name}>{itemData.name}</Text>
-      {itemData.special && (
-        <View style={{ paddingRight: 5 }}>
+      <View style={styles.warningContainer}>
+        {itemData.special && (
           <MaterialIcons
             name="warning-amber"
             size={24}
             color={colors.tabIconFocused}
           />
-        </View>
-      )}
+        )}
+      </View>
       <Text style={styles.date}>{itemData.date}</Text>
       <Text style={styles.quantity}>
         {itemData.quantity}
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     color: colors.whiteText,
     fontWeight: "bold",
   },
+  warningContainer: { flex: 1 },
   date: {
     flex: 3,
     padding: 5,
