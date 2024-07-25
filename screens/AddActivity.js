@@ -30,6 +30,15 @@ export default function AddActivity({ route }) {
   const [date, setDate] = useState(parsedDate);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [special, setSpecial] = useState(itemData.special);
+  const [items, setItems] = useState([
+    { label: "Walking", value: "Walking" },
+    { label: "Running", value: "Running" },
+    { label: "Swimming", value: "Swimming" },
+    { label: "Weights", value: "Weights" },
+    { label: "Yoga", value: "Yoga" },
+    { label: "Cycling", value: "Cycling" },
+    { label: "Hiking", value: "Hiking" },
+  ]);
   const [isChecked, setChecked] = useState(false);
   const specialActivities = ["Running", "Weights"];
   const navigation = useNavigation();
@@ -163,20 +172,12 @@ export default function AddActivity({ route }) {
         <DropDownPicker
           open={openDropDown}
           value={activityType}
-          items={[
-            { label: "Walking", value: "Walking" },
-            { label: "Running", value: "Running" },
-            { label: "Swimming", value: "Swimming" },
-            { label: "Weights", value: "Weights" },
-            { label: "Yoga", value: "Yoga" },
-            { label: "Cycling", value: "Cycling" },
-            { label: "Hiking", value: "Hiking" },
-          ]}
+          items={items}
           setOpen={setOpenDropDown}
           setValue={setActivityType}
-          setItems={() => {}}
+          // setItems={() => {}}
           multiple={false}
-          textStyle={{ color: theme.textColor }}
+          textStyle={{ color: colors.textAndBorder }}
           style={{
             borderColor: colors.textAndBorder,
             backgroundColor: theme.backgroundColor,
@@ -259,6 +260,7 @@ const styles = StyleSheet.create({
   textCheckboxContainer: {
     paddingBottom: 5,
     paddingLeft: 5,
+    paddingRight: 5,
     flexDirection: "row",
     alignItems: "center",
   },
