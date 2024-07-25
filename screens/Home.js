@@ -41,8 +41,13 @@ export default function Home() {
           },
           headerTintColor: colors.whiteText,
           headerRight: () => (
-            <Pressable onPress={() => navigation.navigate("AddActivity")}>
-              <View style={{ flexDirection: "row", marginRight: 10 }}>
+            <Pressable
+              onPress={() => navigation.navigate("AddActivity")}
+              style={({ pressed }) => {
+                return pressed && styles.pressedStyle;
+              }}
+            >
+              <View style={[{ flexDirection: "row", marginRight: 10 }]}>
                 <MaterialIcons name="add" size={24} color={colors.whiteText} />
                 <MaterialIcons
                   name="directions-run"
@@ -71,7 +76,12 @@ export default function Home() {
           },
           headerTintColor: colors.whiteText,
           headerRight: () => (
-            <Pressable onPress={() => navigation.navigate("AddDiet")}>
+            <Pressable
+              onPress={() => navigation.navigate("AddDiet")}
+              style={({ pressed }) => {
+                return pressed && styles.pressedStyle;
+              }}
+            >
               <View style={{ flexDirection: "row", marginRight: 10 }}>
                 <MaterialIcons name="add" size={24} color={colors.whiteText} />
                 <MaterialIcons
@@ -105,4 +115,8 @@ export default function Home() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  pressedStyle: {
+    opacity: 0.5,
+  },
+});

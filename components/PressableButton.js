@@ -4,7 +4,13 @@ import colors from "../colors";
 
 export default function PressableButton({ title, children, style, onPress }) {
   return (
-    <Pressable style={[styles.button, style]} onPress={onPress}>
+    <Pressable
+      onPress={onPress}
+      android_ripple={{ color: colors.androidRipple }}
+      style={({ pressed }) => {
+        return [styles.button, style, pressed && styles.pressedStyle];
+      }}
+    >
       <Text style={styles.buttonText}>{title}</Text>
       {children}
     </Pressable>
@@ -23,5 +29,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: colors.whiteText,
     fontSize: 16,
+  },
+  pressedStyle: {
+    opacity: 0.5,
   },
 });

@@ -31,7 +31,7 @@ export default function AddActivity({ route }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [special, setSpecial] = useState(itemData.special);
   const [isChecked, setChecked] = useState(false);
-  const specialActivities = ["running", "weights"];
+  const specialActivities = ["Running", "Weights"];
   const navigation = useNavigation();
 
   // if route.params exists, set the title to "Edit"
@@ -41,7 +41,12 @@ export default function AddActivity({ route }) {
       title: headerTitle,
       headerRight: () =>
         route.params ? (
-          <Pressable onPress={() => handleDelete(route.params.itemData.id)}>
+          <Pressable
+            onPress={() => handleDelete(route.params.itemData.id)}
+            style={({ pressed }) => {
+              return pressed && styles.pressedStyle;
+            }}
+          >
             <View style={{ marginRight: 10 }}>
               <MaterialIcons
                 name="delete-forever"
@@ -82,6 +87,11 @@ export default function AddActivity({ route }) {
     }
     if (!duration || isNaN(duration) || parseInt(duration) <= 0) {
       Alert.alert("Error", "Please enter a valid duration (positive number).");
+      return false;
+    }
+    // if the activity is special, the user must approve it
+    if (special && !isChecked) {
+      Alert.alert("Error", "Please approve the special activity.");
       return false;
     }
     return true;
@@ -154,13 +164,13 @@ export default function AddActivity({ route }) {
           open={openDropDown}
           value={activityType}
           items={[
-            { label: "Walking", value: "walking" },
-            { label: "Running", value: "running" },
-            { label: "Swimming", value: "swimming" },
-            { label: "Weights", value: "weights" },
-            { label: "Yoga", value: "yoga" },
-            { label: "Cycling", value: "cycling" },
-            { label: "Hiking", value: "hiking" },
+            { label: "Walking", value: "Walking" },
+            { label: "Running", value: "Running" },
+            { label: "Swimming", value: "Swimming" },
+            { label: "Weights", value: "Weights" },
+            { label: "Yoga", value: "Yoga" },
+            { label: "Cycling", value: "Cycling" },
+            { label: "Hiking", value: "Hiking" },
           ]}
           setOpen={setOpenDropDown}
           setValue={setActivityType}
@@ -256,5 +266,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  pressedStyle: {
+    opacity: 0.5,
   },
 });

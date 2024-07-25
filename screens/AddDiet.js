@@ -9,7 +9,11 @@ import Input from "../components/Input";
 import PressableButton from "../components/PressableButton";
 import CustomText from "../components/CustomText";
 import colors from "../colors";
-import { writeToDB, updateDocInDB } from "../firebase/firebaseHelper";
+import {
+  writeToDB,
+  updateDocInDB,
+  deleteFromDB,
+} from "../firebase/firebaseHelper";
 
 export default function AddDiet({ route }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -35,7 +39,12 @@ export default function AddDiet({ route }) {
       headerTitle,
       headerRight: () =>
         route.params ? (
-          <Pressable onPress={handleDelete}>
+          <Pressable
+            onPress={() => handleDelete(route.params.itemData.id)}
+            style={({ pressed }) => {
+              return pressed && styles.pressedStyle;
+            }}
+          >
             <View style={{ marginRight: 10 }}>
               <MaterialIcons
                 name="delete-forever"
@@ -48,12 +57,18 @@ export default function AddDiet({ route }) {
     });
   }, []);
 
-  const handleDelete = () => {
+  const handleDelete = (id) => {
     Alert.alert("Delete", "Are you sure you want to delete this item?", [
       {
         text: "No",
       },
-      { text: "Yes", onPress: () => navigation.goBack() },
+      {
+        text: "Yes",
+        onPress: () => {
+          deleteFromDB(id, "Diet");
+          navigation.goBack();
+        },
+      },
     ]);
     //todo: delete the item
   };
@@ -71,6 +86,10 @@ export default function AddDiet({ route }) {
     }
     if (!calories || isNaN(calories) || parseInt(calories) <= 0) {
       Alert.alert("Error", "Please enter valid calories (positive number).");
+      return false;
+    }
+    if (special && !isChecked) {
+      Alert.alert("Error", "Please approve the special entry.");
       return false;
     }
     return true;
@@ -233,5 +252,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  pressedStyle: {
+    opacity: 0.5,
   },
 });

@@ -6,7 +6,7 @@ import colors from "../colors";
 
 export default function Item({ itemData, collectionName }) {
   const navigation = useNavigation();
-  // console.log("itemData in Item.js: ", itemData);
+
   const handleItemPress = (itemData) => {
     const editScreen =
       collectionName === "Activities" ? "AddActivity" : "AddDiet";
@@ -16,7 +16,10 @@ export default function Item({ itemData, collectionName }) {
   return (
     <Pressable
       onPress={() => handleItemPress(itemData)}
-      style={styles.container}
+      android_ripple={{ color: colors.androidRipple }}
+      style={({ pressed }) => {
+        return [styles.container, pressed && styles.pressedStyle];
+      }}
     >
       <Text style={styles.name}>{itemData.name}</Text>
       <View style={styles.warningContainer}>
@@ -74,5 +77,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 12,
     textAlign: "center",
+  },
+  pressedStyle: {
+    opacity: 0.5,
   },
 });
