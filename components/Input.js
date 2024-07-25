@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 import React, { useContext } from "react";
 import { ThemeContext } from "../ThemeContext";
 import colors from "../colors";

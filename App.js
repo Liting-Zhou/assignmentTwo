@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useContext } from "react";
+import React from "react";
 import Home from "./screens/Home";
 import AddActivity from "./screens/AddActivity";
 import AddDiet from "./screens/AddDiet";
@@ -49,13 +48,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   // backgroundColor: "#fff",
-  //   backgroundColor: theme.backgroundColor,
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
-});

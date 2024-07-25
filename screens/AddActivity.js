@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
+import { StyleSheet, View, Alert, Pressable, Platform } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import Checkbox from "expo-checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -17,7 +17,7 @@ import {
 } from "../firebase/firebaseHelper";
 
 export default function AddActivity({ route }) {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   // if an item is clicked, the route will have the item data
   // otherwise, use default values
   const itemData = route.params
@@ -98,11 +98,6 @@ export default function AddActivity({ route }) {
       Alert.alert("Error", "Please enter a valid duration (positive number).");
       return false;
     }
-    // if the activity is special, the user must approve it
-    if (special && !isChecked) {
-      Alert.alert("Error", "Please approve the special activity.");
-      return false;
-    }
     return true;
   };
 
@@ -128,12 +123,17 @@ export default function AddActivity({ route }) {
       const nameOld = route.params.itemData.name;
       const quantityOld = route.params.itemData.quantity;
       const dateOld = parsedDate;
-
+      //only alert the user if there is a change
       if (
         nameOld !== activityType ||
         quantityOld !== duration ||
         dateOld !== date
       ) {
+        // if the activity is special, the user must approve it
+        if (special && !isChecked) {
+          Alert.alert("Error", "Please approve the special activity.");
+          return;
+        }
         Alert.alert(
           "Important",
           "Are you sure you want to save these changes?",
@@ -167,7 +167,12 @@ export default function AddActivity({ route }) {
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}
     >
-      <View style={[styles.formItemContainer, { zIndex: 1000 }]}>
+      <View
+        style={[
+          styles.formItemContainer,
+          Platform.OS === "ios" ? { zIndex: 1000 } : {},
+        ]}
+      >
         <CustomText>Activity*</CustomText>
         <DropDownPicker
           open={openDropDown}
@@ -175,12 +180,15 @@ export default function AddActivity({ route }) {
           items={items}
           setOpen={setOpenDropDown}
           setValue={setActivityType}
-          // setItems={() => {}}
           multiple={false}
-          textStyle={{ color: colors.textAndBorder }}
+          textStyle={{ color: theme.textColor }}
           style={{
             borderColor: colors.textAndBorder,
             backgroundColor: theme.backgroundColor,
+          }}
+          dropDownContainerStyle={{
+            backgroundColor: theme.backgroundColor,
+            borderColor: colors.textAndBorder,
           }}
         />
       </View>

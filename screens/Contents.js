@@ -1,13 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useContext } from "react";
 import ItemsList from "../components/ItemsList";
 import { ThemeContext } from "../ThemeContext";
-import colors from "../colors";
 
 export default function Contents({ route }) {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const content = route.params.content;
-  console.log("content: ", content);
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}

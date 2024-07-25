@@ -1,11 +1,10 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
-import React, { useContext } from "react";
+import { StyleSheet, View, Pressable } from "react-native";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Settings from "./Settings";
 import Contents from "./Contents";
-import PressableButton from "../components/PressableButton";
 import colors from "../colors";
 
 const Tab = createBottomTabNavigator();

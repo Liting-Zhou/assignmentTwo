@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import { onSnapshot, collection } from "firebase/firestore";
 import Item from "./Item";
@@ -18,7 +18,7 @@ export default function ItemsList({ collectionName }) {
             newArray.push({ ...docSnapShot.data(), id: docSnapShot.id });
           });
         }
-        console.log("newArrayDiet: ", newArray);
+
         if (collectionName === "Activities") {
           setActivitiesData(newArray);
         } else {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useContext } from "react";
 import PressableButton from "../components/PressableButton";
 import { ThemeContext } from "../ThemeContext";
@@ -6,7 +6,6 @@ import { ThemeContext } from "../ThemeContext";
 export default function Settings() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const handleToggleTheme = () => {
-    // console.log("toggle theme");
     toggleTheme();
   };
   return (

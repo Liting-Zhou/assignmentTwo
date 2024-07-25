@@ -30,11 +30,3 @@ export async function deleteFromDB(id, collectionName) {
     console.log("delete from db", e);
   }
 }
-
-// export async function addWarningToGoal(id, collectionName) {
-//   try {
-//     await updateDoc(doc(db, collectionName, id), { warning: true });
-//   } catch (e) {
-//     console.log("update doc", e);
-//   }
-// }

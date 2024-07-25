@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
+import { StyleSheet, View, Pressable, Alert } from "react-native";
 import React, { useState, useLayoutEffect, useContext } from "react";
 import Checkbox from "expo-checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -16,7 +16,7 @@ import {
 } from "../firebase/firebaseHelper";
 
 export default function AddDiet({ route }) {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   // if an item is clicked, the route will have the item data
   // otherwise, use default values
   const itemData = route.params
@@ -27,7 +27,6 @@ export default function AddDiet({ route }) {
   const [calories, setCalories] = useState(itemData.quantity);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(parsedDate);
-  // console.log("date pass to Edit mode: ", date);
   const [special, setSpecial] = useState(itemData.special);
   const [isChecked, setChecked] = useState(false);
   const navigation = useNavigation();
@@ -70,7 +69,6 @@ export default function AddDiet({ route }) {
         },
       },
     ]);
-    //todo: delete the item
   };
 
   const handleDateChange = (event, selectedDate) => {
@@ -86,10 +84,6 @@ export default function AddDiet({ route }) {
     }
     if (!calories || isNaN(calories) || parseInt(calories) <= 0) {
       Alert.alert("Error", "Please enter valid calories (positive number).");
-      return false;
-    }
-    if (special && !isChecked) {
-      Alert.alert("Error", "Please approve the special entry.");
       return false;
     }
     return true;
@@ -115,12 +109,16 @@ export default function AddDiet({ route }) {
       const nameOld = route.params.itemData.name;
       const quantityOld = route.params.itemData.quantity;
       const dateOld = parsedDate;
-
+      //only alert the user if there is a change
       if (
         nameOld !== description ||
         quantityOld !== calories ||
         dateOld !== date
       ) {
+        if (special && !isChecked) {
+          Alert.alert("Error", "Please approve the special entry.");
+          return;
+        }
         Alert.alert(
           "Important",
           "Are you sure you want to save these changes?",
@@ -144,12 +142,6 @@ export default function AddDiet({ route }) {
       writeToDB(data, "Diet");
       navigation.goBack();
     }
-
-    // const special = isSpecial();
-    // setSpecial(special);
-
-    // save the data
-    // writeToDB(data, "Diet");
   };
 
   const handleCancel = () => {
