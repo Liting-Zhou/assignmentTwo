@@ -9,6 +9,7 @@ import colors from "../colors";
 
 const Tab = createBottomTabNavigator();
 
+// display the bottom tab navigator with Activities, Diet, and Settings
 export default function Home() {
   const navigation = useNavigation();
   return (

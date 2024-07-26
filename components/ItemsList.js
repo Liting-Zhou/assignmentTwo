@@ -14,11 +14,12 @@ export default function ItemsList({ collectionName }) {
       (querySnapshot) => {
         let newArray = [];
         if (!querySnapshot.empty) {
+          // iterate through each document in the snapshot
           querySnapshot.forEach((docSnapShot) => {
             newArray.push({ ...docSnapShot.data(), id: docSnapShot.id });
           });
         }
-
+        // update state based on the collection name
         if (collectionName === "Activities") {
           setActivitiesData(newArray);
         } else {
@@ -26,11 +27,13 @@ export default function ItemsList({ collectionName }) {
         }
       }
     );
+    // cleanup subscription on component unmount
     return () => {
       unsubscribe();
     };
   }, []);
 
+  // determine which data to display based on the collection name
   const data = collectionName === "Activities" ? activitiesData : dietData;
 
   return (

@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import ItemsList from "../components/ItemsList";
 import { ThemeContext } from "../ThemeContext";
 
+// display the list of items based on the content type, activities or diet
 export default function Contents({ route }) {
   const { theme } = useContext(ThemeContext);
   const content = route.params.content;

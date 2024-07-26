@@ -7,6 +7,7 @@ import colors from "../colors";
 export default function Item({ itemData, collectionName }) {
   const navigation = useNavigation();
 
+  // when item pressed, navigate to the corresponding edit screen
   const handleItemPress = (itemData) => {
     const editScreen =
       collectionName === "Activities" ? "AddActivity" : "AddDiet";

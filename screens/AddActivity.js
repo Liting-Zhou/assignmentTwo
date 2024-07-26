@@ -17,6 +17,7 @@ import {
 } from "../firebase/firebaseHelper";
 
 export default function AddActivity({ route }) {
+  // retrieve the current theme from the ThemeContext
   const { theme } = useContext(ThemeContext);
   // if an item is clicked, the route will have the item data
   // otherwise, use default values
@@ -43,8 +44,8 @@ export default function AddActivity({ route }) {
   const specialActivities = ["Running", "Weights"];
   const navigation = useNavigation();
 
-  // if route.params exists, set the title to "Edit"
   useLayoutEffect(() => {
+    // if route.params exists, set the title to "Edit" and add a delete button
     const headerTitle = route.params ? "Edit" : "Add An Activity";
     navigation.setOptions({
       title: headerTitle,
@@ -151,9 +152,11 @@ export default function AddActivity({ route }) {
           ]
         );
       } else {
+        //if no changes, just go back
         navigation.goBack();
       }
     } else {
+      // if not in Edit mode, just save to the database
       writeToDB(data, "Activities");
       navigation.goBack();
     }

@@ -16,13 +16,14 @@ import {
 } from "../firebase/firebaseHelper";
 
 export default function AddDiet({ route }) {
+  // retrieve the current theme from the ThemeContext
   const { theme } = useContext(ThemeContext);
   // if an item is clicked, the route will have the item data
   // otherwise, use default values
   const itemData = route.params
     ? route.params.itemData
     : { date: new Date(), id: 0, name: "", quantity: "", special: false };
-  const parsedDate = new Date(itemData.date);
+  const parsedDate = new Date(itemData.date); //parse the date string to Date object
   const [description, setDescription] = useState(itemData.name);
   const [calories, setCalories] = useState(itemData.quantity);
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -31,7 +32,7 @@ export default function AddDiet({ route }) {
   const [isChecked, setChecked] = useState(false);
   const navigation = useNavigation();
 
-  // if route.params exists, set the title to "Edit"
+  // if route.params exists, set the title to "Edit" and add a delete button
   useLayoutEffect(() => {
     const headerTitle = route.params ? "Edit" : "Add A Diet Entry";
     navigation.setOptions({
@@ -136,9 +137,11 @@ export default function AddDiet({ route }) {
           ]
         );
       } else {
+        //if no changes, just go back
         navigation.goBack();
       }
     } else {
+      // if not in Edit mode, just save to the database
       writeToDB(data, "Diet");
       navigation.goBack();
     }
